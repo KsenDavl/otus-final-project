@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>List of all meetings</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        .books {
+            border: 1px solid steelblue;
+            width: 600px;
+            border-collapse: collapse;
+        }
+
+        .books tr td, th {
+            padding: 5px;
+            border: 1px solid steelblue;
+        }
+
+        .books ul {
+            margin: 1px;
+            padding-left: 2px;
+        }
+
+        .books td:last-child, td:first-child {
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+<h3>Meetings:</h3>
+
+<table class="meetings">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Approved</th>
+        <th>Capacity</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="meeting : ${meetings}">
+        <td th:text="${meeting.id}">1</td>
+        <td th:text="${meeting.title}">It</td>
+        <td th:text="${meeting.}">Horror</td>
+        <td th:text="${book.author.lastName} + ' ' + ${book.author.firstName}">Stephen King</td>
+
+        <td>
+            <ul><a href="save.html" th:href="@{/book/save/{id}(id=${book.id})}">edit</a></ul>
+            <ul><a href="save.html" th:href="@{/book/delete(id=${book.id})}">delete</a></ul>
+            <ul><a href="save.html" th:href="@{/comment/all(bookId=${book.id})}">comments</a></ul>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
+
+<div>
+    <button type="button" >
+        <a href="Add a book" th:href="@{/book/save}" th:text="Add"></a>
+    </button>
+</div>
+
+</body>
+</html>

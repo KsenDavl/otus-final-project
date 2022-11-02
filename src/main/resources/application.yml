@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/otus?meeting
+    username: postgres
+    password: postgres
+    hikari:
+      schema: meeting
+
+  liquibase:
+    change-log: "classpath:db/changelog-master.xml"
+    enabled: true
+    url: jdbc:postgresql://localhost:5432/otus?current_schema=meeting
+    password: postgres
+    user: postgres
+    driver-class-name: org.postgresql.Driver
+    default-schema: meeting
+
+  jpa:
+    generate-ddl: false
+    show-sql: true

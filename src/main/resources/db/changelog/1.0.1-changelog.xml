@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="28.10.2021 11:00" author="kdavletova">
+        <sqlFile path="1.0.1/sql/init_schema.sql" relativeToChangelogFile="true"/>
+        <rollback>
+            <sqlFile path="1.0.1/sql/rollback/init_schema_rollback.sql" relativeToChangelogFile="true"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

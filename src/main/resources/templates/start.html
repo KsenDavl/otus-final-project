@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Start page</title>
+</head>
+<body>
+<h1>Welcome to our meeting service!</h1>
+<br>
+<h3>Want to get to know your colleagues or share some work experience? Join the meeting!</h3>
+
+<div class="row">
+    <a th:href="@{/all/approved}"><button type="button">Join a meeting</button></a>
+    <a th:href="@{/save}"><button type="button">Create your own meeting!</button></a>
+    <a th:href="@{/admin}"><button type="button">I'm an admin!</button></a>
+</div>
+
+</body>
+</html>
