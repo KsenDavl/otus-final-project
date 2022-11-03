@@ -16,5 +16,5 @@ spring:
     default-schema: meeting
 
   jpa:
-    generate-ddl: false
+    generate-ddl: true
     show-sql: true

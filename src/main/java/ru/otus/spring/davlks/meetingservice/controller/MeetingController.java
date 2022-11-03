@@ -34,6 +34,12 @@ public class MeetingController {
         return "list";
     }
 
+    @GetMapping("/all/{participantId}")
+    public String getListByParticipantId(ModelMap model, @PathVariable long participantId) {
+        model.addAttribute("meetings", meetingService.findByParticipantId(participantId));
+        return "list";//todo
+    }
+
     @GetMapping("/save")
     public String save(Model model) {
         model.addAttribute("meeting", new Meeting());
@@ -44,5 +50,12 @@ public class MeetingController {
     public String save(@PathVariable Long id, Model model) {
         model.addAttribute("meeting", meetingService.findById(id));
         return "save";
+    }
+
+    //todo вынести в рест?
+    @GetMapping("/details/{id}")
+    public String getMeetingDetails(@PathVariable long id, Model model) {
+        model.addAttribute("meeting", meetingService.findById(id));
+        return "details";
     }
 }

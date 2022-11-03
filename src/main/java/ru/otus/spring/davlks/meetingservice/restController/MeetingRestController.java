@@ -1,7 +1,10 @@
 package ru.otus.spring.davlks.meetingservice.restController;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ru.otus.spring.davlks.meetingservice.entity.Meeting;
+import ru.otus.spring.davlks.meetingservice.security.entity.User;
 import ru.otus.spring.davlks.meetingservice.service.MeetingService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -30,12 +33,22 @@ public class MeetingRestController {
 
     @PostMapping("/save")
     void save(HttpServletResponse response, Meeting meeting) throws IOException {
-        meetingService.save(meeting);
+        UserDetails userDetails = (UserDetails) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        meetingService.save(meeting, userDetails.getUsername());
         response.sendRedirect("/start");
     }
 
     @DeleteMapping("/{id}")
     void deleteById(@PathVariable long id) {
         meetingService.deleteById(id);
+    }
+
+    @PostMapping("/add/{meetingId}")
+    void addMeetingToUser(HttpServletResponse response, @PathVariable long meetingId) throws IOException {
+        User user = (User) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        meetingService.addMeetingToUser(meetingId, user);
+        response.sendRedirect("/start");
     }
 }

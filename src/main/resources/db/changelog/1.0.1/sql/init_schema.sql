@@ -6,6 +6,8 @@ CREATE TABLE IF NOT EXISTS meeting.meetings (
     date DATE,
     time TIME,
     approved BOOLEAN,
-    capacity INTEGER
+    capacity INTEGER,
+    organizer_login VARCHAR(255),
+    seats_left INTEGER
 );
 

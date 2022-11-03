@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration page</title>
+</head>
+<body>
+<h1>Welcome to our meeting service!</h1>
+<br>
+<br>
+<h3>Visited us before?</h3>
+
+<div class="row">
+    <a href="list.html" th:href="@{/login}"><button type="button">Yes, sign me in!</button></a>
+    <a th:href="@{/registration}"><button type="button">No, create me an account!</button></a>
+</div>
+
+</body>
+</html>

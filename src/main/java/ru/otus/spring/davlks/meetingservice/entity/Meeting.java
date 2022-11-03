@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.otus.spring.davlks.meetingservice.security.entity.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -41,17 +42,21 @@ public class Meeting {
     @Column(name = "capacity")
     private int capacity;
 
+    @Column(name = "seats_left")
+    private int seatsLeft;
 
 //    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, mappedBy = "book", fetch = FetchType.LAZY)
 //    private List<String> requirements;
 
-    //private List<User> participants;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "meetings_users",
+            joinColumns = {@JoinColumn(name = "meeting_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
+    private List<User> users;
 
-//    private User organizer;
+    @Column(name = "organizerLogin")
+    private String organizerLogin;
 
     //private Admin approver;
-
-
-
 
 }

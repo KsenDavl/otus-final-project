@@ -11,4 +11,8 @@ public interface MeetingRepository extends JpaRepository<Meeting, Long>, JpaSpec
 
     @Query("SELECT m FROM Meeting m WHERE m.approved = true")
     List<Meeting> findAllApproved();
+
+    List<Meeting> findAllByUsersId(long id);
+
+
 }
