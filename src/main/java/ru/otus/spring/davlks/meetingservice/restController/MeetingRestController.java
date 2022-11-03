@@ -39,9 +39,16 @@ public class MeetingRestController {
         response.sendRedirect("/start");
     }
 
-    @DeleteMapping("/{id}")
-    void deleteById(@PathVariable long id) {
+    @GetMapping("/delete/{id}")
+    void deleteById(HttpServletResponse response, @PathVariable long id) throws IOException {
         meetingService.deleteById(id);
+        response.sendRedirect("/admin");
+    }
+
+    @GetMapping("/approve/{id}")
+    void approveById(HttpServletResponse response, @PathVariable long id) throws IOException {
+        meetingService.approveMeeting(id);
+        response.sendRedirect("/admin");
     }
 
     @PostMapping("/add/{meetingId}")

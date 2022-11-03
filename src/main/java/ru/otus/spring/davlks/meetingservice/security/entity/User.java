@@ -37,9 +37,14 @@ public class User implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "meeting_id", referencedColumnName = "id")})
     private List<Meeting> meetings;
 
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
+    private List<Role> roles;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return roles;
     }
 
     @Override

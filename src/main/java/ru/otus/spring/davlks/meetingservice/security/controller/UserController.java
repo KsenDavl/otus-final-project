@@ -4,8 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.otus.spring.davlks.meetingservice.security.entity.Role;
 import ru.otus.spring.davlks.meetingservice.security.entity.User;
 import ru.otus.spring.davlks.meetingservice.security.service.UserService;
+
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -34,6 +37,7 @@ public class UserController {
 
     @PostMapping("/registration")
     public String addUser(User user) {
+        user.setRoles(List.of(new Role(1, "USER"))); //todo enum
         userService.saveUser(user);
         return "redirect:/";
     }

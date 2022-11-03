@@ -16,7 +16,7 @@ public class MeetingService {
     private final MeetingRepository meetingRepository;
     private final UserDao userDao;
 
-    public MeetingService(MeetingRepository meetingRepository,UserDao userDao) {
+    public MeetingService(MeetingRepository meetingRepository, UserDao userDao) {
         this.meetingRepository = meetingRepository;
         this.userDao = userDao;
     }
@@ -67,6 +67,12 @@ public class MeetingService {
 
     public void deleteById(long id) {
         meetingRepository.deleteById(id);
+    }
+
+    public void approveMeeting(long id) {
+        Meeting meeting = meetingRepository.findById(id).get();
+        meeting.setApproved(true);
+        meetingRepository.save(meeting);
     }
 
     public List<Meeting> findByParticipantId(long id) {
