@@ -48,7 +48,7 @@
         <td th:text="${meeting.description}">Let's play football together!</td>
 
         <td>
-            <a href="details.html" th:href="@{/details/{id}(id=${meeting.id})}">details</a>
+            <a href="details.html" th:href="@{/details/join/{id}(id=${meeting.id})}">details</a>
         </td>
     </tr>
     </tbody>
@@ -57,7 +57,6 @@
 
 <div>
     <button type="button" >
-        <a href="Add a book" th:href="@{/book/save}" th:text="Add"></a>
         <a th:href="@{/start}"><button type="button">Back</button></a>
     </button>
 </div>

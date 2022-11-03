@@ -15,5 +15,61 @@
     <a th:href="@{/admin}"><button type="button">I'm an admin!</button></a>
 </div>
 
+<br>
+<br>
+<h3>Meetings you've already joined:</h3>
+
+<div th:if="${#lists.isEmpty(meetings)}">
+    <p>No meetings yet</p>
+</div>
+
+<table class="meetings" th:if="${not #lists.isEmpty(meetings)}">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="meeting : ${meetings}">
+        <td th:text="${meeting.id}">1</td>
+        <td th:text="${meeting.title}">Football game</td>
+        <td th:text="${meeting.description}">Let's play football together!</td>
+
+        <td>
+            <a href="details.html" th:href="@{/details/{id}(id=${meeting.id})}">details</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<style type="text/css">
+    body {
+        padding: 50px;
+    }
+
+    .books {
+        border: 1px solid steelblue;
+        width: 600px;
+        border-collapse: collapse;
+    }
+
+    .books tr td, th {
+        padding: 5px;
+        border: 1px solid steelblue;
+    }
+
+    .books ul {
+        margin: 1px;
+        padding-left: 2px;
+    }
+
+    .books td:last-child, td:first-child {
+        width: 50px;
+    }
+</style>
+
 </body>
 </html>

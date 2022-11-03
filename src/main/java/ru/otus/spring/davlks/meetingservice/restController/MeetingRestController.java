@@ -51,4 +51,12 @@ public class MeetingRestController {
         meetingService.addMeetingToUser(meetingId, user);
         response.sendRedirect("/start");
     }
+
+    @PostMapping("/leave/{meetingId}")
+    void removeMeetingFromUser(HttpServletResponse response, @PathVariable long meetingId) throws IOException {
+        User user = (User) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        meetingService.removeMeetingFromUser(meetingId, user);
+        response.sendRedirect("/start");
+    }
 }

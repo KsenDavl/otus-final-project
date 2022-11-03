@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import ru.otus.spring.davlks.meetingservice.entity.Meeting;
 
+import java.lang.annotation.Native;
 import java.util.List;
 
 public interface MeetingRepository extends JpaRepository<Meeting, Long>, JpaSpecificationExecutor<Meeting> {
@@ -14,5 +15,9 @@ public interface MeetingRepository extends JpaRepository<Meeting, Long>, JpaSpec
 
     List<Meeting> findAllByUsersId(long id);
 
+    @Query(value = "SELECT * FROM meeting.meetings m join meeting.meetings_users mu ON m.id = mu.meeting_id\n" +
+            "            JOIN meeting.users u ON u.id = mu.user_id\n" +
+            "            WHERE u.id = ?1", nativeQuery = true)
+    List<Meeting> findAllUserMeetings(long userId);
 
 }

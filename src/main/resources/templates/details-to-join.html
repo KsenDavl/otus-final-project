@@ -24,7 +24,7 @@
 </head>
 <body>
 
-<form id="details-form" th:method="post" th:action="@{/meeting/leave/{id}(id=${meeting.id})}" th:object="${meeting} ">
+<form id="details-form" th:method="post" th:action="@{/meeting/add/{id}(id=${meeting.id})}" th:object="${meeting} ">
     <h3>Meeting Info:</h3>
 
     <div class="row">
@@ -48,7 +48,7 @@
     </div>
 
     <div class="row">
-        <button type="submit">Leave</button>
+        <button type="submit">Join</button>
         <a th:href="@{/start}"><button type="button">Back to start page</button></a>
     </div>
 </form>

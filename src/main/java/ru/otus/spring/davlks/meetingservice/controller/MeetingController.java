@@ -1,11 +1,13 @@
 package ru.otus.spring.davlks.meetingservice.controller;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import ru.otus.spring.davlks.meetingservice.entity.Meeting;
+import ru.otus.spring.davlks.meetingservice.security.entity.User;
 import ru.otus.spring.davlks.meetingservice.service.MeetingService;
 
 @Controller
@@ -18,13 +20,18 @@ public class MeetingController {
     }
 
     @GetMapping("/start")
-    public String start() {
+    public String start(ModelMap model) {
+        User user = (User) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        model.addAttribute("meetings", meetingService.findAllUserMeetings(user.getId()));
         return "start";
     }
 
     @GetMapping("/all/approved")
     public String getListApproved(ModelMap model) {
-        model.addAttribute("meetings", meetingService.findAllApproved());
+        User user = (User) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        model.addAttribute("meetings", meetingService.findAllApproved(user.getId()));
         return "list-approved";
     }
 
@@ -57,5 +64,12 @@ public class MeetingController {
     public String getMeetingDetails(@PathVariable long id, Model model) {
         model.addAttribute("meeting", meetingService.findById(id));
         return "details";
+    }
+
+    //todo вынести в рест?
+    @GetMapping("/details/join/{id}")
+    public String getMeetingDetailsToJoin(@PathVariable long id, Model model) {
+        model.addAttribute("meeting", meetingService.findById(id));
+        return "details-to-join";
     }
 }

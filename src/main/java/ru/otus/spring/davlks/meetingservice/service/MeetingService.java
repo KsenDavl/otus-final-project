@@ -3,26 +3,33 @@ package ru.otus.spring.davlks.meetingservice.service;
 import org.springframework.stereotype.Service;
 import ru.otus.spring.davlks.meetingservice.entity.Meeting;
 import ru.otus.spring.davlks.meetingservice.repository.MeetingRepository;
+import ru.otus.spring.davlks.meetingservice.security.dao.UserDao;
 import ru.otus.spring.davlks.meetingservice.security.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MeetingService {
 
     private final MeetingRepository meetingRepository;
+    private final UserDao userDao;
 
-    public MeetingService(MeetingRepository meetingRepository) {
+    public MeetingService(MeetingRepository meetingRepository,UserDao userDao) {
         this.meetingRepository = meetingRepository;
+        this.userDao = userDao;
     }
 
     public List<Meeting> findAll() {
         return meetingRepository.findAll();
     }
 
-    public List<Meeting> findAllApproved() {
-        return meetingRepository.findAllApproved();
+    public List<Meeting> findAllApproved(long userId) {
+        User user = userDao.findById(userId).get();
+        List<Meeting> meetings = meetingRepository.findAllApproved();
+        return meetings.stream().filter(m -> !m.getUsers().contains(user))
+                .collect(Collectors.toList());
     }
 
     public Meeting findById(long id) {
@@ -48,6 +55,15 @@ public class MeetingService {
         return meetingRepository.save(meeting);
     }
 
+    public Meeting removeMeetingFromUser(long meetingId, User user) {
+        Meeting meeting = findById(meetingId);
+        User user1 = meeting.getUsers().stream()
+                .filter(u -> u.getId() == user.getId())
+                .findFirst().get();
+        meeting.getUsers().remove(user1);
+        meeting.setSeatsLeft(meeting.getSeatsLeft() + 1);
+        return meetingRepository.save(meeting);
+    }
 
     public void deleteById(long id) {
         meetingRepository.deleteById(id);
@@ -55,5 +71,9 @@ public class MeetingService {
 
     public List<Meeting> findByParticipantId(long id) {
         return meetingRepository.findAllByUsersId(id);
+    }
+
+    public List<Meeting> findAllUserMeetings(long userId) {
+        return meetingRepository.findAllUserMeetings(userId);
     }
 }
