@@ -8,7 +8,6 @@ import ru.otus.spring.davlks.meetingservice.security.entity.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -33,8 +32,11 @@ public class Meeting {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate date;
 
-    @Column(name = "time")
-    private LocalTime time;
+    @Column(name = "start_time", columnDefinition = "TIME")
+    private LocalTime startTime;
+
+    @Column(name = "finish_time", columnDefinition = "TIME")
+    private LocalTime finishTime;
 
     @Column(name = "approved")
     private boolean approved;

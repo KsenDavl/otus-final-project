@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Start page</title>
+</head>
+<body>
+<br>
+<br>
+<h3>Sorry, another meeting takes place at this time, please choose another date or time</h3>
+
+<br>
+
+<div class="row">
+    <a th:href="@{/save}"><button type="button">Create new meeting</button></a>
+    <a th:href="@{/start}"><button type="button">Back to start page</button></a>
+</div>
+
+
+</body>
+</html>

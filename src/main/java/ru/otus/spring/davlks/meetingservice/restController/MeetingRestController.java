@@ -35,8 +35,12 @@ public class MeetingRestController {
     void save(HttpServletResponse response, Meeting meeting) throws IOException {
         UserDetails userDetails = (UserDetails) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal();
-        meetingService.save(meeting, userDetails.getUsername());
-        response.sendRedirect("/start");
+        if (meetingService.isSpaceFreeForMeeting(meeting)) {
+            meetingService.save(meeting, userDetails.getUsername());
+            response.sendRedirect("/start");
+        } else {
+            response.sendRedirect("/busy");
+        }
     }
 
     @GetMapping("/delete/{id}")

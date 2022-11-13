@@ -20,4 +20,11 @@
         </rollback>
     </changeSet>
 
+    <changeSet id="05.11.2021 17:07" author="kdavletova">
+        <sqlFile path="1.0.1/sql/add_role.sql" relativeToChangelogFile="true"/>
+        <rollback>
+            <sqlFile path="1.0.1/sql/rollback/add_user_rollback.sql" relativeToChangelogFile="true"/>
+        </rollback>
+    </changeSet>
+
 </databaseChangeLog>

@@ -82,4 +82,9 @@ public class MeetingService {
     public List<Meeting> findAllUserMeetings(long userId) {
         return meetingRepository.findAllUserMeetings(userId);
     }
+
+    public boolean isSpaceFreeForMeeting(Meeting meeting) {
+        long count = meetingRepository.countMeetingsAtTheTime(meeting.getDate(), meeting.getStartTime(), meeting.getFinishTime());
+        return count == 0;
+    }
 }

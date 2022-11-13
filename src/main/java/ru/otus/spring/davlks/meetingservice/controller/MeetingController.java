@@ -72,4 +72,9 @@ public class MeetingController {
         model.addAttribute("meeting", meetingService.findById(id));
         return "details-to-join";
     }
+
+    @GetMapping("/busy")
+    public String getTimeIsBookedPage() {
+        return "busy";
+    }
 }
