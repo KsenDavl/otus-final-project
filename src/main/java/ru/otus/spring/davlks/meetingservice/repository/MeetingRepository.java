@@ -14,6 +14,10 @@ public interface MeetingRepository extends JpaRepository<Meeting, Long>, JpaSpec
     @Query("SELECT m FROM Meeting m WHERE m.approved = true and m.seatsLeft > 0")
     List<Meeting> findAllApproved();
 
+    @Query(value = "SELECT * FROM meeting.meetings m WHERE m.approved = true and m.seats_left > 0 " +
+            "and lower(m.title) like lower(concat('%', ?1, '%')) ", nativeQuery = true)
+    List<Meeting> findAllApprovedBySearchWord(String searchWord);
+
     List<Meeting> findAllByUsersId(long id);
 
     @Query(value = "SELECT * FROM meeting.meetings m join meeting.meetings_users mu ON m.id = mu.meeting_id\n" +

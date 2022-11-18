@@ -32,6 +32,19 @@
 <body>
 <h3>Meetings:</h3>
 
+
+<form id="update-form" action="save.html" th:method="get" th:action="@{/all/approved/{searchWord}(searchWord=${searchWord})}">
+
+    <div class="row">
+        <label for="search-input">Search: </label>
+        <input id="search-input" name="searchWord" type="text" value="football" th:value="${searchWord}"/>
+        <button type="submit">ok</button>
+    </div>
+
+</form>
+<br>
+
+
 <table class="meetings">
     <thead>
     <tr>

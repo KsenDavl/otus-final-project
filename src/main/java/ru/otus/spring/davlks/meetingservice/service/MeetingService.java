@@ -32,6 +32,13 @@ public class MeetingService {
                 .collect(Collectors.toList());
     }
 
+    public List<Meeting> findAllApprovedBySearchWord(long userId, String searchWord) {
+        User user = userDao.findById(userId).get();
+        List<Meeting> meetings = meetingRepository.findAllApprovedBySearchWord(searchWord);
+        return meetings.stream().filter(m -> !m.getUsers().contains(user))
+                .collect(Collectors.toList());
+    }
+
     public Meeting findById(long id) {
         return meetingRepository.findById(id).get(); //todo подумать
     }
