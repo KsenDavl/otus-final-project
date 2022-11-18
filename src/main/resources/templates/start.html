@@ -45,6 +45,35 @@
     </tr>
     </tbody>
 </table>
+<br>
+
+<h3>Meetings you've organized:</h3>
+
+<div th:if="${#lists.isEmpty(orgMeetings)}">
+    <p>No meetings yet</p>
+</div>
+
+<table class="meetings" th:if="${not #lists.isEmpty(orgMeetings)}">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="orgMeeting : ${orgMeetings}">
+        <td th:text="${orgMeeting.id}">1</td>
+        <td th:text="${orgMeeting.title}">Football game</td>
+        <td th:text="${orgMeeting.description}">Let's play football together!</td>
+
+        <td>
+            <a href="details.html" th:href="@{/details/{id}(id=${orgMeeting.id})}">details</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
 <style type="text/css">
     body {

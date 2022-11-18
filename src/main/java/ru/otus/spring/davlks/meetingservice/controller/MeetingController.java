@@ -25,6 +25,7 @@ public class MeetingController {
         User user = (User) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal();
         model.addAttribute("meetings", meetingService.findAllUserMeetings(user.getId()));
+        model.addAttribute("orgMeetings", meetingService.findAllMeetingsOrganizedByUser(user.getUsername()));
         return "start";
     }
 

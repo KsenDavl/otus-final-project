@@ -90,6 +90,10 @@ public class MeetingService {
         return meetingRepository.findAllUserMeetings(userId);
     }
 
+    public List<Meeting> findAllMeetingsOrganizedByUser(String userLogin) {
+        return meetingRepository.findAllByOrganizerLogin(userLogin);
+    }
+
     public boolean isSpaceFreeForMeeting(Meeting meeting) {
         long count = meetingRepository.countMeetingsAtTheTime(meeting.getDate(), meeting.getStartTime(), meeting.getFinishTime());
         return count == 0;

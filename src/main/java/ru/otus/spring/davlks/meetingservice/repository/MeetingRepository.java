@@ -25,6 +25,8 @@ public interface MeetingRepository extends JpaRepository<Meeting, Long>, JpaSpec
             "            WHERE u.id = ?1", nativeQuery = true)
     List<Meeting> findAllUserMeetings(long userId);
 
+    List<Meeting> findAllByOrganizerLogin(String login);
+
     //todo exist
     @Query(value = "select count(*) from meeting.meetings where date = ?1 and (start_time between ?2 and ?3 " +
             "OR finish_time between ?2 and ?3)", nativeQuery = true)
