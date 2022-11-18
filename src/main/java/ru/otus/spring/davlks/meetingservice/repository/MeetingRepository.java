@@ -18,6 +18,8 @@ public interface MeetingRepository extends JpaRepository<Meeting, Long>, JpaSpec
             "and lower(m.title) like lower(concat('%', ?1, '%')) ", nativeQuery = true)
     List<Meeting> findAllApprovedBySearchWord(String searchWord);
 
+    List<Meeting> findAllByDateAndApproved(LocalDate date, boolean approved);
+
     List<Meeting> findAllByUsersId(long id);
 
     @Query(value = "SELECT * FROM meeting.meetings m join meeting.meetings_users mu ON m.id = mu.meeting_id\n" +

@@ -6,6 +6,7 @@ import ru.otus.spring.davlks.meetingservice.repository.MeetingRepository;
 import ru.otus.spring.davlks.meetingservice.security.dao.UserDao;
 import ru.otus.spring.davlks.meetingservice.security.entity.User;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +36,13 @@ public class MeetingService {
     public List<Meeting> findAllApprovedBySearchWord(long userId, String searchWord) {
         User user = userDao.findById(userId).get();
         List<Meeting> meetings = meetingRepository.findAllApprovedBySearchWord(searchWord);
+        return meetings.stream().filter(m -> !m.getUsers().contains(user))
+                .collect(Collectors.toList());
+    }
+
+    public List<Meeting> findAllApprovedBySearchDate(long userId, LocalDate searchDate) {
+        User user = userDao.findById(userId).get();
+        List<Meeting> meetings = meetingRepository.findAllByDateAndApproved(searchDate, true);
         return meetings.stream().filter(m -> !m.getUsers().contains(user))
                 .collect(Collectors.toList());
     }

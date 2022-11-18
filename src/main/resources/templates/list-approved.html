@@ -33,11 +33,22 @@
 <h3>Meetings:</h3>
 
 
-<form id="update-form" action="save.html" th:method="get" th:action="@{/all/approved/{searchWord}(searchWord=${searchWord})}">
+<form id="search-word-form" action="save.html" th:method="get" th:action="@{/all/approved/search/{searchWord}(searchWord=${searchWord})}">
 
     <div class="row">
         <label for="search-input">Search: </label>
         <input id="search-input" name="searchWord" type="text" value="football" th:value="${searchWord}"/>
+        <button type="submit">ok</button>
+    </div>
+
+</form>
+<br>
+
+<form id="search-date-form" action="save.html" th:method="get" th:action="@{/all/approved/(searchDate=${searchDate})}">
+
+    <div class="row">
+        <label for="search-date-input">Search date: </label>
+        <input id="search-date-input" name="searchDate" type="date" value="2022-02-02" th:value="${searchWord}"/>
         <button type="submit">ok</button>
     </div>
 

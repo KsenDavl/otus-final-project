@@ -1,5 +1,6 @@
 package ru.otus.spring.davlks.meetingservice.controller;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.otus.spring.davlks.meetingservice.entity.Meeting;
 import ru.otus.spring.davlks.meetingservice.security.entity.User;
 import ru.otus.spring.davlks.meetingservice.service.MeetingService;
+
+import java.time.LocalDate;
 
 @Controller
 public class MeetingController {
@@ -35,15 +38,28 @@ public class MeetingController {
                 .getContext().getAuthentication().getPrincipal();
         model.addAttribute("meetings", meetingService.findAllApproved(user.getId()));
         model.addAttribute("searchWord", "");
+        model.addAttribute("searchDate", null);
         return "list-approved";
     }
 
-    @GetMapping("/all/approved/")
+    @GetMapping("/all/approved/search/")
     public String getListApprovedBySearchWord(ModelMap model, @RequestParam String searchWord) {
         User user = (User) SecurityContextHolder
                 .getContext().getAuthentication().getPrincipal();
         model.addAttribute("meetings", meetingService.findAllApprovedBySearchWord(user.getId(), searchWord));
         model.addAttribute("searchWord", "");
+        model.addAttribute("searchDate", null);
+        return "list-approved";
+    }
+
+    @GetMapping("/all/approved/")
+    public String getListApprovedBySearchDate(ModelMap model,
+                                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate searchDate) {
+        User user = (User) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+        model.addAttribute("meetings", meetingService.findAllApprovedBySearchDate(user.getId(), searchDate));
+        model.addAttribute("searchWord", "");
+        model.addAttribute("searchDate", searchDate);
         return "list-approved";
     }
 
