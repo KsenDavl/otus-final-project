@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface MeetingRepository extends JpaRepository<Meeting, Long>, JpaSpecificationExecutor<Meeting> {
 
-    @Query("SELECT m FROM Meeting m WHERE m.approved = true")
+    @Query("SELECT m FROM Meeting m WHERE m.approved = true and m.seatsLeft > 0")
     List<Meeting> findAllApproved();
 
     List<Meeting> findAllByUsersId(long id);

@@ -37,7 +37,7 @@ public class UserController {
 
     @PostMapping("/registration")
     public String addUser(User user) {
-        user.setRoles(List.of(new Role(1, "USER"))); //todo enum
+        user.setRoles(List.of(new Role(2, "USER"))); //todo enum
         userService.saveUser(user);
         return "redirect:/";
     }
