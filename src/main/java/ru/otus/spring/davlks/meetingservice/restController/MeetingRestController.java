@@ -70,4 +70,10 @@ public class MeetingRestController {
         meetingService.removeMeetingFromUser(meetingId, user);
         response.sendRedirect("/start");
     }
+
+    @PostMapping("/reject/{id}")
+    void rejectMeeting(HttpServletResponse response, @PathVariable long id, String reason) throws IOException {
+        meetingService.rejectMeeting(id, reason);
+        response.sendRedirect("/admin");
+    }
 }

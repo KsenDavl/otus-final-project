@@ -105,4 +105,11 @@ public class MeetingController {
     public String getTimeIsBookedPage() {
         return "busy";
     }
+
+    @GetMapping("/reject/{id}")
+    public String rejectMeeting(@PathVariable long id, Model model) {
+        model.addAttribute("meeting", meetingService.findById(id));
+        model.addAttribute("reason", "");
+        return "reject";
+    }
 }

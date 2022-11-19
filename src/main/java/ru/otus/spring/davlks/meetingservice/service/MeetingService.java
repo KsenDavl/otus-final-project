@@ -111,4 +111,10 @@ public class MeetingService {
         long count = meetingRepository.countMeetingsAtTheTime(meeting.getDate(), meeting.getStartTime(), meeting.getFinishTime());
         return count == 0;
     }
+
+    public void rejectMeeting(long meetingId, String reason) {
+        Meeting meeting = meetingRepository.findById(meetingId).get();
+        messageService.sendRejectingMessage(meeting, reason);
+        meetingRepository.deleteById(meetingId);
+    }
 }

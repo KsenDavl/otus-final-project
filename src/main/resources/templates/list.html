@@ -58,8 +58,8 @@
         <td th:text="${meeting.capacity}">1</td>
 
         <td>
-            <ul><a href="save.html" th:href="@{/meeting/delete/{id}(id=${meeting.id})}">delete</a></ul>
             <ul><a href="save.html" th:href="@{/meeting/approve/{id}(id=${meeting.id})}">approve</a></ul>
+            <ul><a href="reject.html" th:href="@{/reject/{id}(id=${meeting.id})}">reject</a></ul>
         </td>
     </tr>
     </tbody>

@@ -21,7 +21,7 @@ public class MessageService {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(getUserEmail(meeting));
         simpleMailMessage.setSubject(String.format("Meeting '%s' is approved!", meeting.getTitle()));
-        simpleMailMessage.setText(String.format("We gladly inform you that your meeting '%s' that takes place on %s at %s is approved!",
+        simpleMailMessage.setText(String.format("Your meeting '%s' that takes place on %s at %s is approved!",
                 meeting.getTitle(), meeting.getDate(), meeting.getStartTime()));
         mailSender.send(simpleMailMessage);
     }
@@ -36,8 +36,13 @@ public class MessageService {
         mailSender.send(simpleMailMessage);
     }
 
-    public void sendDecliningMessage(Meeting meeting) {
-
+    public void sendRejectingMessage(Meeting meeting, String reason) {
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setTo(getUserEmail(meeting));
+        simpleMailMessage.setSubject(String.format("Meeting '%s' rejected!", meeting.getTitle()));
+        simpleMailMessage.setText(String.format("We are sorry but your meeting '%s' has been rejected for the following reason:\n%s",
+                meeting.getTitle(), reason));
+        mailSender.send(simpleMailMessage);
     }
 
     private String getUserEmail(Meeting meeting) {

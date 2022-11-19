@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Reject meeting</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        label {
+            display: inline-block;
+            width: 100px;
+        }
+
+        input:read-only {
+            background: lightgray;
+        }
+
+        .row {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<form id="decline-form" action="save.html" th:method="post" th:action="@{/meeting/reject/{id}(id=${meeting.id})}" th:object="${reason} ">
+    <h3>Reason for rejecting:</h3>
+
+    <div class="row">
+        <label for="reason-input">Text: </label>
+        <input id="reason-input" name="reason" type="text" value="violates rules" th:value="${reason}"/>
+    </div>
+
+    <div class="row">
+        <button type="submit">Save</button>
+        <a th:href="@{/admin}"><button type="button">Cancel</button></a>
+    </div>
+</form>
+
+</body>
+</html>
