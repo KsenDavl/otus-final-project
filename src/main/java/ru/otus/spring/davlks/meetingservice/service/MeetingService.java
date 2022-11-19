@@ -16,10 +16,12 @@ public class MeetingService {
 
     private final MeetingRepository meetingRepository;
     private final UserDao userDao;
+    private final MessageService messageService;
 
-    public MeetingService(MeetingRepository meetingRepository, UserDao userDao) {
+    public MeetingService(MeetingRepository meetingRepository, UserDao userDao, MessageService messageService) {
         this.meetingRepository = meetingRepository;
         this.userDao = userDao;
+        this.messageService = messageService;
     }
 
     public List<Meeting> findAll() {
@@ -67,7 +69,9 @@ public class MeetingService {
             meeting.getUsers().add(user);
         }
         meeting.setSeatsLeft(meeting.getSeatsLeft() - 1);
-        return meetingRepository.save(meeting);
+        meeting = meetingRepository.save(meeting);
+        messageService.sendJoiningMessage(meeting, user.getEmail());
+        return meeting;
     }
 
     public Meeting removeMeetingFromUser(long meetingId, User user) {
@@ -88,6 +92,7 @@ public class MeetingService {
         Meeting meeting = meetingRepository.findById(id).get();
         meeting.setApproved(true);
         meetingRepository.save(meeting);
+        messageService.sendApprovingMessage(meeting);
     }
 
     public List<Meeting> findByParticipantId(long id) {

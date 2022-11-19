@@ -18,3 +18,14 @@ spring:
   jpa:
     generate-ddl: true
     show-sql: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: meetingservicepetproject@gmail.com
+    password: tumrzgchxcbrgxop
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
