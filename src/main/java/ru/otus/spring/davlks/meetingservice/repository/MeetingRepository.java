@@ -34,4 +34,12 @@ public interface MeetingRepository extends JpaRepository<Meeting, Long>, JpaSpec
             "OR finish_time between ?2 and ?3)", nativeQuery = true)
     long countMeetingsAtTheTime(LocalDate date, LocalTime start, LocalTime finish);
 
+    @Query(value = "select email from meeting.meetings_users mu " +
+            "join meeting.users u on mu.user_id = u.id\n" +
+            "where mu.meeting_id = ?1", nativeQuery = true)
+    List<String> getEmailsToSendReminder(long meetingId);
+
+    @Query(value = "select m from Meeting m " +
+            "where m.date = :date and m.startTime < :time")
+    List<Meeting> getMeetingsInLessOneHour(LocalDate date, LocalTime time);
 }

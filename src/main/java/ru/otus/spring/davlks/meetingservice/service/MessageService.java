@@ -49,5 +49,15 @@ public class MessageService {
         return userDao.findUserByUsername(meeting.getOrganizerLogin()).getEmail();
     }
 
+    public void sendReminder(Meeting meeting, String email) {
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setTo(email);
+        simpleMailMessage.setSubject(String.format("Meeting '%s' will soon start!", meeting.getTitle()));
+        simpleMailMessage.setText(String.format("We remind you that the meeting '%s' you've joined is to start in less than 1 hour!",
+                meeting.getTitle()));
+        mailSender.send(simpleMailMessage);
+
+    }
+
 
 }
