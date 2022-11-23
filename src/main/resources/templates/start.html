@@ -71,7 +71,6 @@
         <td th:text="${orgMeeting.status}">1</td>
 
         <td>
-            <a href="details.html" th:href="@{/details/{id}(id=${orgMeeting.id})}">details</a>
             <a href="start.html" th:href="@{/cancel/request/{id}(id=${orgMeeting.id})}">cancel</a>
         </td>
     </tr>

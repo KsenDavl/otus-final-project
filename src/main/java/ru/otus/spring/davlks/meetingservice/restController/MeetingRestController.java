@@ -33,13 +33,16 @@ public class MeetingRestController {
 
     @PostMapping("/save")
     void save(HttpServletResponse response, Meeting meeting) throws IOException {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder
-                .getContext().getAuthentication().getPrincipal();
-        if (meetingService.isSpaceFreeForMeeting(meeting)) {
+
+        if (!meetingService.isSpaceFreeForMeeting(meeting)) {
+            response.sendRedirect("/busy");
+        } else if (!meetingService.isDateValid(meeting)) {
+            response.sendRedirect("/date");
+        } else {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder
+                    .getContext().getAuthentication().getPrincipal();
             meetingService.save(meeting, userDetails.getUsername());
             response.sendRedirect("/start");
-        } else {
-            response.sendRedirect("/busy");
         }
     }
 

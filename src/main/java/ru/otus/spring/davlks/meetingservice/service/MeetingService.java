@@ -114,6 +114,10 @@ public class MeetingService {
         return count == 0;
     }
 
+    public boolean isDateValid(Meeting meeting) {
+        return meeting.getDate().isAfter(LocalDate.now());
+    }
+
     public void rejectMeeting(long meetingId, String reason) {
         Meeting meeting = meetingRepository.findById(meetingId).get();
         meeting.setStatus(MeetingStatus.REJECTED);

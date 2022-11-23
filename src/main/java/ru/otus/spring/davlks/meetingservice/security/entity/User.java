@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import ru.otus.spring.davlks.meetingservice.entity.Meeting;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Email
     @Column(name = "email")
     private String email;
 

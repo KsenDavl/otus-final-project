@@ -106,6 +106,11 @@ public class MeetingController {
         return "busy";
     }
 
+    @GetMapping("/date")
+    public String getDateIsNotValidPage() {
+        return "date";
+    }
+
     @GetMapping("/reject/{id}")
     public String rejectMeeting(@PathVariable long id, Model model) {
         model.addAttribute("meeting", meetingService.findById(id));

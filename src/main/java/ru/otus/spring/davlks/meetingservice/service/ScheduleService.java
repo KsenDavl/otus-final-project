@@ -33,7 +33,7 @@ public class ScheduleService {
         });
     }
 
-    @Scheduled(fixedRate = 3600000)
+    @Scheduled(fixedRate = 1800000)
     void putFinishedMeetingsToArchive() {
         LocalDate today = LocalDate.now();
         LocalTime now = LocalTime.now();

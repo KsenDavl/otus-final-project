@@ -39,9 +39,6 @@ public class Meeting {
     @Column(name = "finish_time", columnDefinition = "TIME")
     private LocalTime finishTime;
 
-//    @Column(name = "approved")
-//    private boolean approved;
-
     @Column(name = "capacity")
     private int capacity;
 
@@ -60,7 +57,5 @@ public class Meeting {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private MeetingStatus status;
-
-    //private Admin approver;
 
 }

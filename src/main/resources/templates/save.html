@@ -17,7 +17,7 @@
             background: lightgray;
         }
 
-        .row {
+        .form-group {
             margin-top: 10px;
         }
     </style>
@@ -25,45 +25,46 @@
 <body>
 
 <!-- Person edition -->
-<form id="update-form" action="save.html" th:method="post" th:action="@{/meeting/save}" th:object="${meeting} ">
+<form id="update-form" action="save.html" class="form" th:method="post" th:action="@{/meeting/save}" th:object="${meeting}">
     <h3>Meeting Info:</h3>
 
-    <div class="row" th:if="${meeting.id != null}">
+    <div class="form-group" th:if="${meeting.id != null}">
         <label for="id-input">ID:</label>
-        <input id="id-input" type="text" name="id" readonly="readonly" value="1" th:value="*{id}"/>
+        <input class="form-control" id="id-input" type="text" name="id" readonly="readonly" value="1" th:value="*{id}"/>
     </div>
 
-    <div class="row">
+    <div class="form-group">
         <label for="title-input">Title: </label>
-        <input id="title-input" name="title" type="text" value="Football game" th:value="*{title}"/>
+        <input class="form-control" id="title-input" name="title" type="text" value="Football game" th:value="*{title}"/>
     </div>
 
-    <div class="row"> <!--    todo увеличить окно description-->
+    <div class="form-group"> <!--    todo увеличить окно description-->
         <label for="description-input">Description: </label>
-        <input id="description-input" name="description" type="text" value="Let's play together!" th:value="*{description}"/>
+        <input class="form-control" id="description-input" name="description" type="text" value="Let's play together!" th:value="*{description}"/>
     </div>
 
-    <div class="row">
+    <div class="form-group">
         <label for="date-input">Date: </label>
-        <input id="date-input" name="date" type="date" value="25-05-2022" th:value="*{date}"/>
+        <input class="form-control" id="date-input" name="date" type="date" value="25-05-2022" th:value="*{date}"/>
+        <div class="alert alert-warning" th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></div>
     </div>
 
-    <div class="row">
-        <label for="start-time-input">Time: </label>
-        <input id="start-time-input" name="startTime" type="time" value="20:00" th:value="*{startTime}"/>
+    <div class="form-group">
+        <label for="start-time-input">Start time: </label>
+        <input class="form-control" id="start-time-input" name="startTime" type="time" value="20:00" th:value="*{startTime}"/>
     </div>
 
-    <div class="row">
-        <label for="finish-time-input">Time: </label>
-        <input id="finish-time-input" name="finishTime" type="time" value="20:00" th:value="*{finishTime}"/>
+    <div class="form-group">
+        <label for="finish-time-input">Finish time: </label>
+        <input class="form-control" id="finish-time-input" name="finishTime" type="time" value="20:00" th:value="*{finishTime}"/>
     </div>
 
-    <div class="row">
+    <div class="form-group">
         <label for="capacity-input">Capacity: </label>
-        <input id="capacity-input" name="capacity" type="number" value="20" th:value="*{capacity}"/>
+        <input class="form-control" id="capacity-input" name="capacity" type="number" value="20" th:value="*{capacity}"/>
     </div>
 
-    <div class="row">
+    <div class="form-group">
         <button type="submit">Save</button>
         <a th:href="@{/start}"><button type="button">Cancel</button></a>
     </div>

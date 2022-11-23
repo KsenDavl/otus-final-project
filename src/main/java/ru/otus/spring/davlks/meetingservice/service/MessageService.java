@@ -79,7 +79,7 @@ public class MessageService {
             SimpleMailMessage participantMessage = new SimpleMailMessage();
             participantMessage.setTo(email);
             participantMessage.setSubject(String.format("Meeting '%s' was cancelled!", meeting.getTitle()));
-            participantMessage.setText(String.format("We are sorry but the meeting '#s' was cancelled by the organizer. Hope to see you at some other meetings!",
+            participantMessage.setText(String.format("We are sorry but the meeting '%s' was cancelled by the organizer. Hope to see you at some other meetings!",
                     meeting.getTitle()));
             mailSender.send(participantMessage);
         });
