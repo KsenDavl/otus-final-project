@@ -2,7 +2,7 @@ create sequence if not exists role_id_seq start 1;
 
 create table roles (
                        id   BIGSERIAL PRIMARY KEY ,
-                       name VARCHAR(50) NOT NULL UNIQUE
+                       name VARCHAR(50) NOT NULL
 );
 
 create table users_roles (

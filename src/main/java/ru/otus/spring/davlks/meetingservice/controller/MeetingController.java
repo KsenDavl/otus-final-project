@@ -112,4 +112,11 @@ public class MeetingController {
         model.addAttribute("reason", "");
         return "reject";
     }
+
+    @GetMapping("/cancel/request/{id}")
+    public String changeMeeting(@PathVariable long id, Model model) {
+        model.addAttribute("meeting", meetingService.findById(id));
+        model.addAttribute("reason", "");
+        return "cancel";
+    }
 }

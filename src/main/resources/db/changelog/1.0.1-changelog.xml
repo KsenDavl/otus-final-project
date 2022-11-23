@@ -27,4 +27,11 @@
         </rollback>
     </changeSet>
 
+    <changeSet id="21.11.2021 11:35" author="kdavletova">
+        <sqlFile path="1.0.1/sql/add_meeting_status.sql" relativeToChangelogFile="true"/>
+        <rollback>
+            <sqlFile path="1.0.1/sql/rollback/add_meeting_status_rollback.sql" relativeToChangelogFile="true"/>
+        </rollback>
+    </changeSet>
+
 </databaseChangeLog>

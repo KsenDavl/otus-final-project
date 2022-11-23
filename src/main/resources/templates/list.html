@@ -41,7 +41,7 @@
         <th>Date</th>
         <th>Start time</th>
         <th>Finish time</th>
-        <th>Approved</th>
+        <th>Status</th>
         <th>Capacity</th>
         <th>Action</th>
     </tr>
@@ -54,12 +54,13 @@
         <td th:text="${meeting.date}">1</td>
         <td th:text="${meeting.startTime}">1</td>
         <td th:text="${meeting.finishTime}">1</td>
-        <td th:text="${meeting.approved}">1</td>
+        <td th:text="${meeting.status}">1</td>
         <td th:text="${meeting.capacity}">1</td>
 
         <td>
             <ul><a href="save.html" th:href="@{/meeting/approve/{id}(id=${meeting.id})}">approve</a></ul>
             <ul><a href="reject.html" th:href="@{/reject/{id}(id=${meeting.id})}">reject</a></ul>
+            <ul><a href="reject.html" th:href="@{/meeting/cancel/{id}(id=${meeting.id})}">cancel</a></ul>
         </td>
     </tr>
     </tbody>

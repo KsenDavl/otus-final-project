@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.otus.spring.davlks.meetingservice.enums.MeetingStatus;
 import ru.otus.spring.davlks.meetingservice.security.entity.User;
 
 import javax.persistence.*;
@@ -38,8 +39,8 @@ public class Meeting {
     @Column(name = "finish_time", columnDefinition = "TIME")
     private LocalTime finishTime;
 
-    @Column(name = "approved")
-    private boolean approved;
+//    @Column(name = "approved")
+//    private boolean approved;
 
     @Column(name = "capacity")
     private int capacity;
@@ -47,17 +48,18 @@ public class Meeting {
     @Column(name = "seats_left")
     private int seatsLeft;
 
-//    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, mappedBy = "book", fetch = FetchType.LAZY)
-//    private List<String> requirements;
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "meetings_users",
             joinColumns = {@JoinColumn(name = "meeting_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
     private List<User> users;
 
-    @Column(name = "organizerLogin")
+    @Column(name = "organizer_login")
     private String organizerLogin;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private MeetingStatus status;
 
     //private Admin approver;
 

@@ -59,6 +59,7 @@
         <th>ID</th>
         <th>Title</th>
         <th>Description</th>
+        <th>Status</th>
         <th>Action</th>
     </tr>
     </thead>
@@ -67,9 +68,11 @@
         <td th:text="${orgMeeting.id}">1</td>
         <td th:text="${orgMeeting.title}">Football game</td>
         <td th:text="${orgMeeting.description}">Let's play football together!</td>
+        <td th:text="${orgMeeting.status}">1</td>
 
         <td>
             <a href="details.html" th:href="@{/details/{id}(id=${orgMeeting.id})}">details</a>
+            <a href="start.html" th:href="@{/cancel/request/{id}(id=${orgMeeting.id})}">cancel</a>
         </td>
     </tr>
     </tbody>

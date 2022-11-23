@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import ru.otus.spring.davlks.meetingservice.entity.Meeting;
+import ru.otus.spring.davlks.meetingservice.enums.MeetingStatus;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -11,14 +12,14 @@ import java.util.List;
 
 public interface MeetingRepository extends JpaRepository<Meeting, Long>, JpaSpecificationExecutor<Meeting> {
 
-    @Query("SELECT m FROM Meeting m WHERE m.approved = true and m.seatsLeft > 0")
+    @Query("SELECT m FROM Meeting m WHERE m.status = 'APPROVED' and m.seatsLeft > 0")
     List<Meeting> findAllApproved();
 
-    @Query(value = "SELECT * FROM meeting.meetings m WHERE m.approved = true and m.seats_left > 0 " +
+    @Query(value = "SELECT * FROM meeting.meetings m WHERE m.status = 'APPROVED' and m.seats_left > 0 " +
             "and lower(m.title) like lower(concat('%', ?1, '%')) ", nativeQuery = true)
     List<Meeting> findAllApprovedBySearchWord(String searchWord);
 
-    List<Meeting> findAllByDateAndApproved(LocalDate date, boolean approved);
+    List<Meeting> findAllByDateAndStatus(LocalDate date, MeetingStatus approved);
 
     List<Meeting> findAllByUsersId(long id);
 
@@ -37,9 +38,12 @@ public interface MeetingRepository extends JpaRepository<Meeting, Long>, JpaSpec
     @Query(value = "select email from meeting.meetings_users mu " +
             "join meeting.users u on mu.user_id = u.id\n" +
             "where mu.meeting_id = ?1", nativeQuery = true)
-    List<String> getEmailsToSendReminder(long meetingId);
+    List<String> getParticipantsEmails(long meetingId);
 
     @Query(value = "select m from Meeting m " +
             "where m.date = :date and m.startTime < :time")
     List<Meeting> getMeetingsInLessOneHour(LocalDate date, LocalTime time);
+
+    @Query(value = "select m from Meeting m where m.status = 'APPROVED' and (m.date < :today OR (m.date = :today and m.finishTime < :now))")
+    List<Meeting> findFinishedMeetings(LocalDate today, LocalTime now);
 }

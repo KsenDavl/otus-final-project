@@ -3,6 +3,7 @@ package ru.otus.spring.davlks.meetingservice.service;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.otus.spring.davlks.meetingservice.entity.Meeting;
+import ru.otus.spring.davlks.meetingservice.enums.MeetingStatus;
 import ru.otus.spring.davlks.meetingservice.repository.MeetingRepository;
 
 import java.time.LocalDate;
@@ -27,8 +28,19 @@ public class ScheduleService {
         LocalTime time = LocalTime.now().plusHours(1);
         List<Meeting> meetings = meetingRepository.getMeetingsInLessOneHour(today, time);
         meetings.forEach(meeting -> {
-            List<String> emails = meetingRepository.getEmailsToSendReminder(meeting.getId());
+            List<String> emails = meetingRepository.getParticipantsEmails(meeting.getId());
             emails.forEach(email -> messageService.sendReminder(meeting, email));
+        });
+    }
+
+    @Scheduled(fixedRate = 3600000)
+    void putFinishedMeetingsToArchive() {
+        LocalDate today = LocalDate.now();
+        LocalTime now = LocalTime.now();
+        List<Meeting> finishedMeetings = meetingRepository.findFinishedMeetings(today, now);
+        finishedMeetings.forEach(meeting -> {
+            meeting.setStatus(MeetingStatus.ARCHIVED);
+            meetingRepository.save(meeting);
         });
     }
 }

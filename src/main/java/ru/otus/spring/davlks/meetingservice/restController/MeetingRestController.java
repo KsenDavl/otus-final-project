@@ -76,4 +76,16 @@ public class MeetingRestController {
         meetingService.rejectMeeting(id, reason);
         response.sendRedirect("/admin");
     }
+
+    @PostMapping("/cancel/request/{id}")
+    void getRequestForCancelling(HttpServletResponse response, @PathVariable long id, String reason) throws IOException {
+        meetingService.getRequestForCancelling(id, reason);
+        response.sendRedirect("/start");
+    }
+
+    @GetMapping("/cancel/{id}")
+    void cancelMeeting(HttpServletResponse response, @PathVariable long id) throws IOException {
+        meetingService.cancelMeeting(id);
+        response.sendRedirect("/start");
+    }
 }

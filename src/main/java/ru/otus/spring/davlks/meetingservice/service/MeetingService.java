@@ -2,6 +2,7 @@ package ru.otus.spring.davlks.meetingservice.service;
 
 import org.springframework.stereotype.Service;
 import ru.otus.spring.davlks.meetingservice.entity.Meeting;
+import ru.otus.spring.davlks.meetingservice.enums.MeetingStatus;
 import ru.otus.spring.davlks.meetingservice.repository.MeetingRepository;
 import ru.otus.spring.davlks.meetingservice.security.dao.UserDao;
 import ru.otus.spring.davlks.meetingservice.security.entity.User;
@@ -44,7 +45,7 @@ public class MeetingService {
 
     public List<Meeting> findAllApprovedBySearchDate(long userId, LocalDate searchDate) {
         User user = userDao.findById(userId).get();
-        List<Meeting> meetings = meetingRepository.findAllByDateAndApproved(searchDate, true);
+        List<Meeting> meetings = meetingRepository.findAllByDateAndStatus(searchDate, MeetingStatus.APPROVED);
         return meetings.stream().filter(m -> !m.getUsers().contains(user))
                 .collect(Collectors.toList());
     }
@@ -56,6 +57,7 @@ public class MeetingService {
     public Meeting save(Meeting meeting, String organizerLogin) {
         meeting.setOrganizerLogin(organizerLogin);
         meeting.setSeatsLeft(meeting.getCapacity());
+        meeting.setStatus(MeetingStatus.CREATED);
         return meetingRepository.save(meeting);
     }
 
@@ -90,7 +92,7 @@ public class MeetingService {
 
     public void approveMeeting(long id) {
         Meeting meeting = meetingRepository.findById(id).get();
-        meeting.setApproved(true);
+        meeting.setStatus(MeetingStatus.APPROVED);
         meetingRepository.save(meeting);
         messageService.sendApprovingMessage(meeting);
     }
@@ -114,7 +116,22 @@ public class MeetingService {
 
     public void rejectMeeting(long meetingId, String reason) {
         Meeting meeting = meetingRepository.findById(meetingId).get();
+        meeting.setStatus(MeetingStatus.REJECTED);
+        meetingRepository.save(meeting);
         messageService.sendRejectingMessage(meeting, reason);
-        meetingRepository.deleteById(meetingId);
+    }
+
+    //todo use reason
+    public void getRequestForCancelling(long meetingId, String reason) {
+        Meeting meeting = meetingRepository.findById(meetingId).get();
+        meeting.setStatus(MeetingStatus.TO_CANCEL);
+        meetingRepository.save(meeting);
+    }
+
+    public void cancelMeeting(long meetingId) {
+        Meeting meeting = meetingRepository.findById(meetingId).get();
+        meeting.setStatus(MeetingStatus.CANCELLED);
+        meetingRepository.save(meeting);
+        messageService.sendCancellingMessages(meeting);
     }
 }
