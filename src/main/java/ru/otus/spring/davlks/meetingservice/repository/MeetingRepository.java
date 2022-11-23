@@ -25,7 +25,7 @@ public interface MeetingRepository extends JpaRepository<Meeting, Long>, JpaSpec
 
     @Query(value = "SELECT * FROM meeting.meetings m join meeting.meetings_users mu ON m.id = mu.meeting_id\n" +
             "            JOIN meeting.users u ON u.id = mu.user_id\n" +
-            "            WHERE u.id = ?1", nativeQuery = true)
+            "            WHERE u.id = ?1 and m.status = 'APPROVED'", nativeQuery = true)
     List<Meeting> findAllUserMeetings(long userId);
 
     List<Meeting> findAllByOrganizerLogin(String login);
