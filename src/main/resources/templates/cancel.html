@@ -24,7 +24,7 @@
 </head>
 <body>
 
-<form id="decline-form" action="save.html" th:method="get" th:action="@{/meeting/cancel/request/{id}(id=${meeting.id})}" th:object="${reason} ">
+<form id="decline-form" action="save.html" th:method="post" th:action="@{/meeting/cancel/request/{id}(id=${meeting.id})}" th:object="${reason} ">
     <h3>Reason for cancelling:</h3>
 
     <div class="row">
